@@ -2,13 +2,12 @@ pipeline {
   agent any
   stages {
     stage('Build C App') {
-      agent {
-        docker {
-          image 'gcc:12'
-        }
-      }
       steps {
-        sh 'gcc -static -o app src/hello.c'
+        script {
+          docker.image('gcc:12').inside {
+            sh 'gcc -static -o app src/hello.c'
+          }
+        }
       }
     }
     stage('Docker Build') {
@@ -30,3 +29,4 @@ pipeline {
     }
   }
 }
+
