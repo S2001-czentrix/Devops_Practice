@@ -1,6 +1,5 @@
 pipeline {
   agent any
-
   stages {
     stage('Build C App') {
       agent {
@@ -14,6 +13,7 @@ pipeline {
     }
     stage('Docker Build') {
       steps {
+        sh 'eval $(minikube docker-env)'
         sh 'docker build -t hello-c:latest .'
       }
     }
