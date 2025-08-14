@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-c
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-c
+  template:
+    metadata:
+      labels:
+        app: hello-c
+    spec:
+      containers:
+      - name: hello-c
+        image: hello-c:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-c-service
+spec:
+  type: NodePort
+  selector:
+    app: hello-c
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30007
