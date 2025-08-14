@@ -3,11 +3,7 @@ pipeline {
   stages {
     stage('Build C App') {
       steps {
-        script {
-          docker.image('gcc:12').inside {
-            sh 'gcc -static -o app src/hello.c'
-          }
-        }
+        sh 'docker run --rm -v $PWD:/app -w /app gcc:12 gcc -static -o app src/hello.c'
       }
     }
     stage('Docker Build') {
